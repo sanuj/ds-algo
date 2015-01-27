@@ -1,11 +1,18 @@
 #include <iostream>
 using namespace std;
 
+/* Node in the binary search tree with two children - left and right
+*/
 typedef struct struct_node {
 	int data;
 	struct struct_node *left, *right;
 } Node;
 
+/* Insert a new node in the tree at the appropriate position.
+Two parameters:
+node = root of the tree
+data = data to be stored in the newly created node
+*/
 void insert(Node *&node, int data) {
 	if(node == NULL) {
 		node = new Node[1];
@@ -20,11 +27,19 @@ void insert(Node *&node, int data) {
 	}
 }
 
+/* Returns height of the tree i.e. deepest height from the node
+supplied as a parameter.
+*/
 int height(Node* node) {
 	if(node == NULL) return 0;
 	return 1+max(height(node->left), height(node->right));
 }
 
+/* Prints a level of the binary tree. (Helper method used in breadth first traversal.)
+Two parameters:
+level - level to be printed
+root - root of the binary tree
+*/
 void printLevel(int level, Node* root) {
 	if(level == 1) {
 		cout << root->data << " ";
@@ -36,6 +51,8 @@ void printLevel(int level, Node* root) {
 		printLevel(level-1, root->right);
 }
 
+/* Breadth first traversal of the tree from the node specified as a parameter.
+*/
 void printLevelOrder(Node* node) {
 	int ht = height(node);
 	for(int i=1; i<=ht; i++) {
@@ -44,6 +61,10 @@ void printLevelOrder(Node* node) {
 	}
 }
 
+/* Returns the minimum value in the tree as a pointer to the respective node
+One parameter:
+node - root of the tree
+*/
 Node* min(Node* node) {
 	Node *temp = node;
 	while(temp->left)
@@ -51,6 +72,10 @@ Node* min(Node* node) {
 	return temp;
 }
 
+/* Returns the minimum value in the tree as a pointer to the respective node
+One parameter:
+node - root of the tree
+*/
 Node* max(Node* node) {
 	Node *temp = node;
 	while(temp->right)
@@ -58,6 +83,11 @@ Node* max(Node* node) {
 	return temp;
 }
 
+/* Returns pointer to the node of the parent of a node specified as a parameter.
+Two parameters:
+root - root of the tree
+node - node for which the parent has to be identified
+*/
 Node* getParent(Node* root, Node* node) {
 	if(root == NULL || root->left == NULL || root->right == NULL)
 		return NULL;
@@ -69,6 +99,17 @@ Node* getParent(Node* root, Node* node) {
 		return getParent(root->left, node);
 }
 
+/* Prints the tree by Inorder traversal (Used to print the tree in ascending order)
+One parameter:
+node - root of the binary tree
+Eg:
+	2
+   / \
+  1   4
+     / \
+    3   5
+ output -> 1 2 3 4 5
+*/
 void printInorder(Node* node) {
 	while(node == NULL) return;
 	printInorder(node->left);
@@ -76,6 +117,11 @@ void printInorder(Node* node) {
 	printInorder(node->right);
 }
 
+/* Returns the node with the searched key (Binary Search)
+Two parameters:
+root - root of the tree
+key - search query
+*/
 Node* search(Node* root, int key) {
 	if(root == NULL)
 		return NULL;
@@ -87,6 +133,11 @@ Node* search(Node* root, int key) {
 		return search(root->left, key);
 }
 
+/* Deletes the node in the tree and rearranges to maintain order.
+Two parameters:
+root - root of the binary tree
+data - data of node to be deleted
+*/
 Node* deleteNode(Node* root, int data) {
 	if(root == NULL)
 		return NULL;
