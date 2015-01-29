@@ -3,13 +3,17 @@
 #include <math.h>
 using namespace std;
 
-//Minimum Heap
+//Minimum Heap using an array of integers
 typedef struct struct_heap {
 	int *arr;
 	int capacity;
 	int size;
 } Heap;
 
+/* Creates a new heap and returns a pointer to it.
+One parameter:
+capacity - maximum capacity of an the heap when it is full
+*/
 Heap* createHeap(int capacity) {
 	Heap *new_heap = new Heap[1];
 	new_heap->capacity = capacity;
@@ -18,18 +22,31 @@ Heap* createHeap(int capacity) {
 	return new_heap;
 }
 
+/* Returns left index of the index passed in the parameter */
 inline int left(int i) {return 2*i+1;}
 
+/* Returns right index of the index passed in the parameter */
 inline int right(int i) {return 2*i+2;}
 
+/* Returns parent index of the index passed in the parameter */
 inline int parent(int i) {return (i-1)/2;}
 
+/* Returns height of the heap passed as a parameter
+One parameter:
+heap - pointer to the heap
+*/
 inline int height(Heap *heap) {
 	if(heap->size == 0)
 		return 0;
 	return log2(heap->size);
 }
 
+/* Inserts a new integer in the heap so that the property of
+a heap is maintained
+Two parameters:
+heap - pointer to the heap
+key - integer that has to be inserted
+*/
 void insert(Heap *heap, int key) {
 	if(heap->size == heap->capacity) {
 		cout << "Heap overflow!" << endl;
@@ -46,6 +63,7 @@ void insert(Heap *heap, int key) {
 	heap->size++;
 }
 
+/* Prints the heap passed as a parameter. */
 void printHeap(Heap *heap) {
 	int i=0;
 	for(int j=0; j<=height(heap); j++) {
@@ -57,6 +75,9 @@ void printHeap(Heap *heap) {
 	}
 }
 
+/* Returns minimum element in the heap
+It is the root element in a Minimum heap.
+*/
 inline int getMin(Heap *heap) {
 	if(heap->size == 0)
 		return INT_MIN;
@@ -64,6 +85,14 @@ inline int getMin(Heap *heap) {
 		return heap->arr[0];
 }
 
+/* Makes sure that the property of a heap is maintained considering the
+heap originating from index i. It assumes that the child-heaps ie. i--->left
+and i--->right are proper heaps and index i is the only element that might be
+at the wrong place.
+Two parameters:
+heap - pointer to the heap
+i - index which has to be 'heapified'
+*/
 void minHeapify(Heap *heap, int i) {
 	int temp_i = i;
 	if(left(i) < heap->size && heap->arr[i] > heap->arr[left(i)])
@@ -78,6 +107,10 @@ void minHeapify(Heap *heap, int i) {
 	}
 }
 
+/* Removes and returns the minimumm (root) element of the heap.
+One parameter:
+heap - pointer to the heap
+*/
 int extractMin(Heap* heap) {
 	int min = INT_MIN;
 	if(heap->size == 1) {
@@ -92,6 +125,13 @@ int extractMin(Heap* heap) {
 	return min;
 }
 
+/* Decreases the value of the element at index 'i' to 'key' and rearranges
+it in the heap.
+Three parameters:
+heap - pointer to the heap
+i - index of the element that has to be decreased
+key - new (decreased) value of the element
+*/
 void decreaseKey(Heap* heap, int i, int key) {
 	heap->arr[i] = key;
 	while(i != 0 && heap->arr[i] < heap->arr[parent(i)]) {
@@ -102,6 +142,11 @@ void decreaseKey(Heap* heap, int i, int key) {
 	}
 }
 
+/* Deletes an element at index 'i' in the heap
+Two parameters:
+heap - pointer to the heap
+i - index of the element that has to be deleted.
+*/
 void deleteKey(Heap* heap, int i) {
 	decreaseKey(heap, i, INT_MIN);
 	extractMin(heap);
