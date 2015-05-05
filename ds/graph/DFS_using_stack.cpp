@@ -1,24 +1,31 @@
+/*
+This implements Depth First Search using a LIFO stack.
+*/
 #include <iostream>
 #include <climits>
 using namespace std;
 
+//Node struct used to make the stack
 typedef struct struct_node{
 	int data;
 	struct struct_node *next;
 } Node;
 
+// Class implementing stacks
 class Stack {
+	// Private Variables
 	int size;
-	Node *top;
+	Node *top; // Pointer to the top of the stack
 public:
-	Stack();
-	void push(int data);
-	int pop();
-	int peek();
-	void printStack();
-	int getSize() { return size; };
+	Stack(); // Constructor
+	void push(int data); // add data on top of the stack
+	int pop(); // remove data from the top of the stack
+	int peek(); // see data on top of the stack
+	void printStack(); // print the whole stack
+	int getSize() { return size; }; // return the private size variable
 };
 
+// Constructor for the Stack
 Stack::Stack() {
 	size = 0;
 	top = NULL;
@@ -59,18 +66,21 @@ void Stack::printStack() {
 	cout << endl;
 }
 
+// Class to implement Graphs
 class Graph {
-	int v;
-	Node **array;
-	void DFSHelper(int src, int *visited);
+	// Private Members
+	int v; // number of vertices
+	Node **array; // array for making the adjacency list
+	void DFSHelper(int src, int *visited); // Private helper function for depth first search
 public:
-	Graph(int v);
-	int getV() { return v; };
-	void addEdge(int src, int dest);
-	void DFS(int src);
-	void printGraph();
+	Graph(int v); // Constructor for graph
+	int getV() { return v; }; // Return the number of vertices
+	void addEdge(int src, int dest); // Add an edge to the graph from source to destination
+	void DFS(int src); // Member function to implement Depth First Search
+	void printGraph(); // Member function to print the whole graph
 };
 
+// Constructor
 Graph::Graph(int v) {
 	this->v = v;
 	array = new Node*[v];
@@ -78,6 +88,7 @@ Graph::Graph(int v) {
 		array[i] = NULL;
 }
 
+// Adds directional edge
 void Graph::addEdge(int src, int dest) {
 	Node *node_src = new Node[1];
 	node_src->data = dest;
@@ -90,6 +101,7 @@ void Graph::addEdge(int src, int dest) {
 	// array[dest] = node_dest;
 }
 
+// Implementing Depth First Search using a stack
 void Graph::DFS(int src) {
 	int *visited = new int[v];
 	for(int i=0; i<v; i++)
@@ -110,6 +122,7 @@ void Graph::DFS(int src) {
 	} 
 }
 
+// Prints the whole graph
 void Graph::printGraph() {
 	for(int i=0; i<v; i++) {
 		Node *node = array[i];
