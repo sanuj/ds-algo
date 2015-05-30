@@ -6,7 +6,7 @@ typedef struct struct_node {
 	struct struct_node *next;
 } Node;
 
-// Undirectional graph
+// Undirected graph
 typedef struct struct_graph {
 	int v; //number of vertices
 	Node **array;

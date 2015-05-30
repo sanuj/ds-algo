@@ -15,12 +15,12 @@ BTNode* createBTNode(int data) {
 	return new_node;
 }
 
-/*
-Depth first traversals
-1. Inorder
-2. Postorder
-3. Preorder
-*/
+/**
+ * Depth first traversals
+ * 1. Inorder
+ * 2. Postorder
+ * 3. Preorder
+ **/
 // Inorder traversal - print left -> root -> right
 void printInorder(BTNode *node) {
 	if(!node) return;
