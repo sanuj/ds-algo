@@ -29,14 +29,16 @@ void printPrimesTillN(int n) {
 	vector<int> primes;
 	getPrimesTillN(n, primes);
 	cout << "List of primes till " << n << ": " << endl;
-	for(int i=0; i<primes.size()-1; i++)
-		cout << primes[i] << ", ";
-	cout << primes[primes.size()-1];
+	if(!primes.empty()) {
+		for(int i=0; i<primes.size()-1; i++)
+			cout << primes[i] << ", ";
+		cout << primes[primes.size()-1];
+	}
 	cout << endl;
 }
 
 int main() {
-	printPrimesTillN(10);
-	printPrimesTillN(100);
+	for(int i=0; i<150; i++)
+		printPrimesTillN(i);
 	return 0;
 }
