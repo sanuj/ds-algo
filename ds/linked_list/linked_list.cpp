@@ -7,7 +7,7 @@ typedef struct node {
 	struct node* next;
 } Node;
 
-/**Prints list starting fromt the supplied pointer.
+/**Prints list starting from the supplied pointer.
  * @param list pointer to the begining list
  */
 void printList(Node* list) {
@@ -74,7 +74,7 @@ void deleteNode(Node* &head, int key) {
 	}
 }
 
-/**Delete the provided node
+/**Deletes the provided node
  * @param node node to be deleted
  */
 void deleteNode(Node* &node) {
